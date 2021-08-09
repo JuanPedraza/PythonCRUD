@@ -4,6 +4,7 @@ import sqlite3
 from sqlite3.dbapi2 import connect
 
 # Creamos una clase cuyo método será realizar la conexión a la base de datos
+# Se crean los distintos métodos que son los correspondientes al CRUD
 
 class contactos:
     def iniciarConexion(self):
@@ -32,5 +33,14 @@ class contactos:
         cursor = conexion.cursor()
         sentenciaSQL = "DELETE FROM contactos WHERE id=(?)"
         cursor.execute(sentenciaSQL,[idContacto])
+        conexion.commit()
+        conexion.close()
+
+
+    def updateContactos(self,datosContacto):
+        conexion = self.iniciarConexion()
+        cursor = conexion.cursor()
+        sentenciaSQL = "UPDATE contactos SET nombre=?, correo=? WHERE id=?"
+        cursor.execute(sentenciaSQL,datosContacto)
         conexion.commit()
         conexion.close()

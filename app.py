@@ -4,10 +4,22 @@ from PyQt5.QtWidgets import *
 import sys
 import connect
 
+# Validando los datos
 
-# Defininiendo las funciones
+def isEmpty():
+    if window.txtNombre.setText() == "" or window.txtCorreo.setText() == "":
+        alerta.QMessageBox()
+        alerta.setText("¡No podemos almacenar datos vacíos!")
+        alerta.setIcon(QMessageBox.information)
+        alerta.exec()
+        return True
+
+
+# Defininiendo las funciones CRUD de consulta
 
 def agregar():
+    if isEmpty():
+        return False
     print("Soy el botón de agregar")
     nombre = window.txtNombre.text()
     correo = window.txtCorreo.text()
@@ -17,7 +29,17 @@ def agregar():
     consultar()
     
 def modificar():
+    if isEmpty():
+        return False
+        
     print("Soy el botón de modificar")
+    id = window.txtID.text()
+    nombre = window.txtNombre.text()
+    correo = window.txtCorreo.text()
+    objContactos = connect.contactos()
+    contactos = objContactos.updateContactos((nombre,correo,id))
+    consultar()
+
 def eliminar():
     print("Soy el botón de eliminar")
     id = window.txtID.text()
@@ -27,6 +49,7 @@ def eliminar():
 
 def cancelar():
     print("Soy el botón de cancelar")
+    consultar()
 
 
 # Creamos una función para consultar los registros de la tabla
@@ -45,6 +68,17 @@ def consultar():
         window.tableContactos.setItem(indexControl,2, QTableWidgetItem(str(contacto[2])))
         indexControl+=1
 
+    # Limpiamos los campos
+    window.txtID.setText("")
+    window.txtNombre.setText("")
+    window.txtCorreo.setText("")
+
+    # Modificamos el comportamiento de los botones
+    window.btnAgregar.setEnabled(True)
+    window.btnModificar.setEnabled(False)
+    window.btnEliminar.setEnabled(False)
+    window.btnCancelar.setEnabled(False)
+
 def seleccionar():
     id = window.tableContactos.selectedIndexes()[0].data()
     nombre = window.tableContactos.selectedIndexes()[1].data()
@@ -54,6 +88,12 @@ def seleccionar():
     window.txtID.setText(id)
     window.txtNombre.setText(nombre)
     window.txtCorreo.setText(correo)
+
+    # Modificamos el comportamiento de los botones
+    window.btnAgregar.setEnabled(False)
+    window.btnModificar.setEnabled(True)
+    window.btnEliminar.setEnabled(True)
+    window.btnCancelar.setEnabled(True)
 
 # Cargamos la interfaz gráfica previamente creada en PYQT5-TOOLS DESIGNER
 

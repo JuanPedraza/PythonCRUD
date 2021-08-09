@@ -75,6 +75,16 @@
       <height>281</height>
      </rect>
     </property>
+    <property name="rowCount">
+     <number>1</number>
+    </property>
+    <property name="columnCount">
+     <number>3</number>
+    </property>
+    <row/>
+    <column/>
+    <column/>
+    <column/>
    </widget>
    <widget class="QLineEdit" name="txtNombre">
     <property name="geometry">

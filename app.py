@@ -7,10 +7,10 @@ import connect
 # Validando los datos
 
 def isEmpty():
-    if window.txtNombre.setText() == "" or window.txtCorreo.setText() == "":
-        alerta.QMessageBox()
+    if window.txtNombre.text() == "" or window.txtCorreo.text() == "":
+        alerta = QMessageBox()
         alerta.setText("¡No podemos almacenar datos vacíos!")
-        alerta.setIcon(QMessageBox.information)
+        # alerta.setIcon(QMessageBox.information)
         alerta.exec()
         return True
 
@@ -31,7 +31,7 @@ def agregar():
 def modificar():
     if isEmpty():
         return False
-        
+
     print("Soy el botón de modificar")
     id = window.txtID.text()
     nombre = window.txtNombre.text()
